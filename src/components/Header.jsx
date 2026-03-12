@@ -13,24 +13,26 @@ export default function Header() {
   // getMatch("cities", "country", "China");
   return (
     <>
-      <header className="sticky text-slate-800 flex justify-between items-center px-2 shadow-lg">
-        <Link to="/">
-          <img src={logo} alt="" className="w-18" />
-        </Link>
-
-        <nav className="flex gap-8 items-center text-xl">
-          <Link to="/my-anime">
-            <PiListHeart />
+      <header className="sticky ">
+        <div className="text-slate-800 flex justify-between items-center px-2 shadow-lg">
+          <Link to="/">
+            <img src={logo} alt="" className="w-18" />
           </Link>
 
-          <span
-            onClick={() => {
-              setIsModal((prev) => !prev);
-            }}
-          >
-            <BsSearch />
-          </span>
-        </nav>
+          <nav className="flex gap-8 items-center text-xl">
+            <Link to="/my-anime">
+              <PiListHeart />
+            </Link>
+
+            <span
+              onClick={() => {
+                setIsModal((prev) => !prev);
+              }}
+            >
+              <BsSearch />
+            </span>
+          </nav>
+        </div>
       </header>
       <SeacrhModal isModal={isModal} setIsModal={setIsModal} />
     </>

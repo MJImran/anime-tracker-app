@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 
-export default function List({ anime, list, setList, setIsModal }) {
+export default function List({ anime, list, setList, setIsModal, setAnime }) {
   const [isPending, setIsPending] = useState(false);
   const [error, setError] = useState(null);
 

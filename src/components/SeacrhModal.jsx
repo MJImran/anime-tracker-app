@@ -30,6 +30,7 @@ export default function SeacrhModal({ isModal, setIsModal }) {
           {isModal ? (
             <List
               anime={debouncedSearchValue}
+              setAnime={setAnime}
               list={list}
               setList={setList}
               setIsModal={setIsModal}

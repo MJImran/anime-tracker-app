@@ -3,24 +3,23 @@ import Card from "./Card";
 
 export default function Suggestion() {
   const [suggestion, setSuggestion] = useState([]);
+  const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState(null);
 
   useEffect(() => {
+    setIsLoading(true);
     fetch(`https://api.jikan.moe/v4/top/anime?sfw`)
       .then((res) => {
-        if (!res.ok) throw new Error("couldn't fetch anime");
+        if (!res.ok) throw new Error(`${res.statusText}`);
         return res.json();
       })
       .then((data) => {
         setSuggestion(data.data);
-        // console.log(suggestion);
-
-        // setIsPending(false);
-        // setError(null);
+        setIsLoading(false);
       })
       .catch((err) => {
-        // console.log(err);
-        // setIsPending(false);
-        // setError(err.message);
+        setError(err.message);
+        setIsLoading(false);
       });
   }, []);
 
@@ -30,10 +29,21 @@ export default function Suggestion() {
 
   return (
     <>
-      {/* <h3 className="font-semibold text-sm">top anime</h3> */}
-      <section className="mt-6 px-3 grid grid-cols-3 gap-2 sm:grid-cols-3 md:grid-cols-4">
-        {suggestions}
-      </section>
+      {isLoading && (
+        <section className="flex grow-1 items-center justify-center w-4/5 h=[50vh]">
+          Loading...
+        </section>
+      )}
+      {!isLoading && error && (
+        <section className="flex grow-1 items-center justify-center w-4/5 h=[50vh]">
+          {error}
+        </section>
+      )}
+      {!isLoading && !error && (
+        <section className="mt-6 px-3 grid grid-cols-3 gap-2 sm:grid-cols-3 md:grid-cols-4">
+          {suggestions}
+        </section>
+      )}
     </>
   );
 }

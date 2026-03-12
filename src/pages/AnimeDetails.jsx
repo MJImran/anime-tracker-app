@@ -8,18 +8,6 @@ export default function AnimeDetails() {
   const [animeDetails, setAnimeDetails] = React.useState({});
   const [isTrue, setIsTrue] = React.useState(true);
   const [more, setMore] = React.useState(false);
-  const url =
-    "https://www.pixelstalk.net/wp-content/uploads/images6/Anime-Boy-Wallpaper-Desktop.jpg";
-  // function createDetails() {
-  //   console.log(animeDetails.images.jpg.image_url);
-  //   const episodes = animeDetails?.episodes;
-  //   const image = animeDetails.images.jpg.image_url;
-  //   const score = animeDetails?.score;
-  //   const title = animeDetails?.title;
-  //   const rating = animeDetails?.rating;
-  //   const isAiring = animeDetails?.airing ? "airing" : "not airing";
-  //   return { episodes, image, score, title, rating, isAiring };
-  // }
   const params = useParams();
 
   React.useEffect(() => {
@@ -31,15 +19,12 @@ export default function AnimeDetails() {
 
         setAnimeDetails(data.data);
         setIsTrue(false);
-        // console.log(data.data);
       } catch (err) {
         console.error("an error occured");
       }
     }
     getAnime();
   }, [params]);
-
-  console.log("showing", animeDetails);
 
   return isTrue ? (
     <div>not yet</div>
