@@ -1,6 +1,6 @@
 import React from "react";
 import { useParams } from "react-router-dom";
-import { send2Db, getData, getMatch, add } from "../api/firebase";
+import { add2Db } from "../api/firebase";
 import { FaRegHeart } from "react-icons/fa";
 import { IoMdAdd } from "react-icons/io";
 
@@ -38,7 +38,13 @@ export default function AnimeDetails() {
         />
       </div>
       <div className="w-full flex gap-4 items-center">
-        <button className="w-4/5 bg-green-500 py-3 text-base uppercase">
+        <button
+          className="w-4/5 bg-green-500 py-3 text-base uppercase cursor-pointer"
+          onClick={() => {
+            add2Db("anime", animeDetails);
+            console.log("clicked");
+          }}
+        >
           add to list <span className="font-semibold text-xl">+</span>
         </button>
         <button className="w-2/6 bg-blue-500 flex items-center justify-center text-2xl py-3 grow">
@@ -64,12 +70,12 @@ export default function AnimeDetails() {
           </li>
           <li>{animeDetails.isAiring ? "Airing" : "Not airing"}</li>
         </ul>
-        <div className="bg-gray-300 p-2 text-base font-medium tracking-wide leading-[1.8]">
+        <div className="bg-gray-300 p-2 text-base font-normal tracking-wide leading-[1.8]">
           {more
             ? animeDetails.synopsis
-            : animeDetails.synopsis.substring(0, 300)}
+            : animeDetails.synopsis.substring(0, 302)}
           <span className="text-blue-900" onClick={() => setMore(!more)}>
-            {more ? "read less" : "read more"}
+            {more ? " read less" : " read more"}
           </span>
         </div>
       </div>

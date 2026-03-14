@@ -5,12 +5,12 @@ import { PiListHeart } from "react-icons/pi";
 import { RiHome2Line } from "react-icons/ri";
 import logo from "../assets/logo.png";
 import { Link } from "react-router-dom";
-import { send2Db, getData, getMatch, add } from "../api/firebase";
+import { add2Db, getData, getMatch, add } from "../api/firebase";
 
 //
 export default function Header() {
   const [isModal, setIsModal] = React.useState(false);
-  // getMatch("cities", "country", "China");
+
   return (
     <>
       <header className="sticky ">

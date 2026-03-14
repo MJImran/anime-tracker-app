@@ -23,19 +23,28 @@ const firebaseConfig = {
 const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
 
-export async function send2Db(collection, id, newData) {
+export async function add2Db(category, newData) {
   try {
-    const citiesRef = collection(db, collection);
-
-    await setDoc(doc(citiesRef, id), newData);
+    const citiesRef = collection(db, category);
+    await addDoc(citiesRef, newData);
   } catch (e) {
     alert("Error adding document: ", e);
     console.error("Error adding document: ", e);
   }
 }
 
-export async function getData(collection, id) {
-  const docRef = doc(db, collection, id);
+export async function getCol(category, setList) {
+  const ref = collection(db, category);
+  const querySnapshot = await getDocs(ref);
+  let arr = [];
+  querySnapshot.forEach((doc) => {
+    arr = [...arr, doc.data()];
+  });
+  setList([...arr]);
+}
+
+export async function getData(category, id) {
+  const docRef = doc(db, category, id);
   const docSnap = await getDoc(docRef);
 
   if (docSnap.exists()) {
@@ -45,6 +54,7 @@ export async function getData(collection, id) {
     console.log("No such document!");
   }
 }
+
 export async function getMatch(collect, key, value) {
   const q = query(collection(db, collect), where(key, "==", value));
 
