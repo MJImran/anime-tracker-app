@@ -6,6 +6,7 @@ import { IoMdAdd } from "react-icons/io";
 
 export default function AnimeDetails() {
   const [animeDetails, setAnimeDetails] = React.useState({});
+  const [hasAdded, setHasAdded] = React.useState(false);
   const [isTrue, setIsTrue] = React.useState(true);
   const [more, setMore] = React.useState(false);
   const params = useParams();
@@ -41,11 +42,10 @@ export default function AnimeDetails() {
         <button
           className="w-4/5 bg-green-500 py-3 text-base uppercase cursor-pointer"
           onClick={() => {
-            add2Db("anime", animeDetails);
-            console.log("clicked");
+            add2Db("anime", { ...animeDetails, isInList: true }, setHasAdded);
           }}
         >
-          add to list <span className="font-semibold text-xl">+</span>
+          {hasAdded ? "remove from list" : "add to list"}
         </button>
         <button className="w-2/6 bg-blue-500 flex items-center justify-center text-2xl py-3 grow">
           <FaRegHeart />

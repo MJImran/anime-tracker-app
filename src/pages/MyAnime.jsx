@@ -9,13 +9,13 @@ export default function MyAnime() {
     getCol("anime", setList);
   }, []);
 
-  const suggestions = list.map((anime, index) => (
+  const myList = list.map((anime, index) => (
     <Card key={index} anime={anime} id={index} />
   ));
 
   return (
     <section className="mt-6 px-3 grid grid-cols-3 gap-2 sm:grid-cols-3 md:grid-cols-4">
-      {suggestions}
+      {myList}
     </section>
   );
 }

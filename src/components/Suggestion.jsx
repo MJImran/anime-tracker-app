@@ -6,6 +6,8 @@ export default function Suggestion() {
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState(null);
 
+  // const [];
+
   useEffect(() => {
     setIsLoading(true);
     fetch(`https://api.jikan.moe/v4/top/anime?sfw`)

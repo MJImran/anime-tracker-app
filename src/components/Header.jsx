@@ -1,7 +1,7 @@
 import React from "react";
 import SeacrhModal from "../components/SeacrhModal";
 import { BsSearch } from "react-icons/bs";
-import { PiListHeart } from "react-icons/pi";
+import { PiListHeart, PiUserLight } from "react-icons/pi";
 import { RiHome2Line } from "react-icons/ri";
 import logo from "../assets/logo.png";
 import { Link } from "react-router-dom";
@@ -22,6 +22,10 @@ export default function Header() {
           <nav className="flex gap-8 items-center text-xl">
             <Link to="/my-anime">
               <PiListHeart />
+            </Link>
+
+            <Link to="/login">
+              <PiUserLight />
             </Link>
 
             <span

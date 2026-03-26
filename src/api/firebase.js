@@ -1,4 +1,5 @@
 import { initializeApp } from "firebase/app";
+import { useNavigate } from "react-router-dom";
 import {
   doc,
   getFirestore,
@@ -10,6 +11,13 @@ import {
   where,
   query,
 } from "firebase/firestore";
+import {
+  getAuth,
+  signInWithPopup,
+  GoogleAuthProvider,
+  onAuthStateChanged,
+  signOut,
+} from "firebase/auth";
 
 const firebaseConfig = {
   apiKey: "AIzaSyCtw_2Edk64buSMXoZ2zSIzgLDbfP5Qd_A",
@@ -22,11 +30,19 @@ const firebaseConfig = {
 
 const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
+export const auth = getAuth(app);
 
-export async function add2Db(category, newData) {
+function reroute(route) {
+  const navigate = useNavigate();
+  navigate(route);
+}
+
+export async function add2Db(category, newData, setHasAdded) {
   try {
     const citiesRef = collection(db, category);
     await addDoc(citiesRef, newData);
+    alert("anime added succesfully");
+    setHasAdded(true);
   } catch (e) {
     alert("Error adding document: ", e);
     console.error("Error adding document: ", e);
@@ -67,4 +83,60 @@ export async function getMatch(collect, key, value) {
 
 export function add(price = 10, age = 10) {
   return console.log(price * age);
+}
+
+export async function handleGmailLogin() {
+  let verification;
+  const provider = new GoogleAuthProvider();
+  provider.setCustomParameters({
+    prompt: "select_account",
+  });
+  signInWithPopup(auth, provider)
+    .then((result) => {
+      // This gives you a Google Access Token. You can use it to access the Google API.
+      const credential = GoogleAuthProvider.credentialFromResult(result);
+      const token = credential.accessToken;
+      // The signed-in user info.
+      const user = result.user;
+      verification = true;
+      console.log("sign in successful", verification);
+      reroute("my-anime");
+
+      // IdP data available using getAdditionalUserInfo(result)
+      // ...
+    })
+    .catch((error) => {
+      // Handle Errors here.
+      const errorCode = error.code;
+      const errorMessage = error.message;
+      alert(errorMessage);
+      verification = false;
+      // The email of the user's account used.
+      // const email = error.customData.email;
+      // // The AuthCredential type that was used.
+      // const credential = GoogleAuthProvider.credentialFromError(error);
+      // ...
+    });
+  return verification;
+}
+
+export function verifyUser(setVerified) {
+  onAuthStateChanged(auth, (user) => {
+    if (user) {
+      console.log("user is signed in:", user);
+      setTimeout(() => {
+        signOut(auth)
+          .then(() => {
+            console.log("sign out successful");
+          })
+          .catch((error) => {
+            alert(error.message);
+          });
+      }, 600000);
+
+      setVerified(true);
+    } else {
+      console.log("logged in to proceed");
+    }
+  });
 }
