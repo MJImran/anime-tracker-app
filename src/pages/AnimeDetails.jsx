@@ -1,8 +1,8 @@
 import React from "react";
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import { add2Db } from "../api/firebase";
 import { FaRegHeart } from "react-icons/fa";
-import { IoMdAdd } from "react-icons/io";
+import { useAuthContext } from "../context/AuthContext";
 
 export default function AnimeDetails() {
   const [animeDetails, setAnimeDetails] = React.useState({});
@@ -10,6 +10,8 @@ export default function AnimeDetails() {
   const [isTrue, setIsTrue] = React.useState(true);
   const [more, setMore] = React.useState(false);
   const params = useParams();
+  const user = useAuthContext();
+  const navigate = useNavigate;
 
   React.useEffect(() => {
     async function getAnime() {
@@ -42,7 +44,16 @@ export default function AnimeDetails() {
         <button
           className="w-4/5 bg-green-500 py-3 text-base uppercase cursor-pointer"
           onClick={() => {
-            add2Db("anime", { ...animeDetails, isInList: true }, setHasAdded);
+            if (user) {
+              add2Db(
+                "anime",
+                { ...animeDetails, isInList: true, uid: user.uid },
+                setHasAdded,
+              );
+            } else {
+              alert("login to add");
+              // return navigate("/login");
+            }
           }}
         >
           {hasAdded ? "remove from list" : "add to list"}

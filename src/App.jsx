@@ -10,24 +10,20 @@ import { HashRouter, BrowserRouter, Routes, Route } from "react-router-dom";
 
 function App() {
   return (
-    <HashRouter>
-      <Routes>
-        <Route element={<Layout />}>
-          <Route index element={<Home />} />
+    <AuthProvider>
+      <HashRouter>
+        <Routes>
+          <Route element={<Layout />}>
+            <Route index element={<Home />} />
+            <Route path="anime-details/:id" element={<AnimeDetails />} />
+          </Route>
           <Route path="login" element={<Login />} />
-          <Route path="anime-details/:id" element={<AnimeDetails />} />
-          <Route
-            element={
-              <AuthProvider>
-                <Authentication />
-              </AuthProvider>
-            }
-          >
+          <Route element={<Authentication />}>
             <Route path="my-anime" element={<MyAnime name="jamiu" />} />
           </Route>
-        </Route>
-      </Routes>
-    </HashRouter>
+        </Routes>
+      </HashRouter>
+    </AuthProvider>
   );
 }
 

@@ -28,8 +28,8 @@ const firebaseConfig = {
   appId: "1:396492309186:web:69a168149ee9b7c44db15b",
 };
 
-const app = initializeApp(firebaseConfig);
-const db = getFirestore(app);
+export const app = initializeApp(firebaseConfig);
+export const db = getFirestore(app);
 export const auth = getAuth(app);
 
 function reroute(route) {
@@ -120,23 +120,16 @@ export async function handleGmailLogin() {
   return verification;
 }
 
-export function verifyUser(setVerified) {
-  onAuthStateChanged(auth, (user) => {
-    if (user) {
-      console.log("user is signed in:", user);
-      setTimeout(() => {
-        signOut(auth)
-          .then(() => {
-            console.log("sign out successful");
-          })
-          .catch((error) => {
-            alert(error.message);
-          });
-      }, 600000);
+// export function verifyUser(setVerified) {
+//   onAuthStateChanged(auth, (user) => {
+//     if (user) {
+//       console.log("user is signed in:", user);
 
-      setVerified(true);
-    } else {
-      console.log("logged in to proceed");
-    }
-  });
-}
+//       }, 600000);
+
+//       setVerified(true);
+//     } else {
+//       console.log("logged in to proceed");
+//     }
+//   });
+// }

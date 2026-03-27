@@ -1,17 +1,12 @@
 import { useState, useContext } from "react";
 import { Outlet, Navigate } from "react-router-dom";
-import { useAuth } from "../context/AuthContext";
-import { verifyUser } from "../api/firebase";
+import { useAuthContext } from "../context/AuthContext";
 
 export default function Authentication() {
-  const value = useAuth();
-  const [verified, setVerified] = useState(false);
-  console.log(value);
+  // const [verified, setVerified] = useState(false);
+  const value = useAuthContext();
+  const verified = value ? true : false;
+  console.log(verified, value);
 
-  verifyUser(setVerified);
-  if (!verified) {
-    return <Navigate to="/login" />;
-  } else {
-    return <Outlet />;
-  }
+  return verified ? <Outlet /> : <Navigate to="/login" />;
 }

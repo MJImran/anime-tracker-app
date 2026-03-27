@@ -1,31 +1,37 @@
 import React from "react";
 import SeacrhModal from "../components/SeacrhModal";
-import { BsSearch } from "react-icons/bs";
-import { PiListHeart, PiUserLight } from "react-icons/pi";
-import { RiHome2Line } from "react-icons/ri";
-import logo from "../assets/logo.png";
+import { ImSearch } from "react-icons/im";
+import { PiListHeartBold, PiUserBold } from "react-icons/pi";
+import { FaSignOutAlt } from "react-icons/fa";
+import logo from "../assets/animejournal-logo.jpeg";
 import { Link } from "react-router-dom";
-import { add2Db, getData, getMatch, add } from "../api/firebase";
+import { signOut } from "firebase/auth";
+import { auth } from "../api/firebase";
+import { backgroundColor, textColor } from "../api/util";
+import { useAuthContext } from "../context/AuthContext";
 
 //
 export default function Header() {
   const [isModal, setIsModal] = React.useState(false);
+  const user = useAuthContext();
 
   return (
     <>
-      <header className="sticky ">
-        <div className="text-slate-800 flex justify-between items-center px-2 shadow-lg">
+      <header className="sticky">
+        <div className="text-plum-800 flex justify-between items-center px-6 py-1.5 shadow-lg">
           <Link to="/">
-            <img src={logo} alt="" className="w-18" />
+            <img src={logo} alt="" className="w-20" />
           </Link>
 
           <nav className="flex gap-8 items-center text-xl">
-            <Link to="/my-anime">
-              <PiListHeart />
-            </Link>
+            {user && (
+              <Link to="/my-anime">
+                <PiListHeartBold className={"text-violet-950"} />
+              </Link>
+            )}
 
             <Link to="/login">
-              <PiUserLight />
+              <PiUserBold className="text-violet-950" />
             </Link>
 
             <span
@@ -33,8 +39,19 @@ export default function Header() {
                 setIsModal((prev) => !prev);
               }}
             >
-              <BsSearch />
+              <ImSearch className="text-violet-950" />
             </span>
+
+            {user && (
+              <span
+                onClick={() => {
+                  signOut(auth);
+                  console.log("user signed out");
+                }}
+              >
+                <FaSignOutAlt className="text-violet-950" />
+              </span>
+            )}
           </nav>
         </div>
       </header>
