@@ -4,8 +4,6 @@ import { signInWithPopup, GoogleAuthProvider } from "firebase/auth";
 import { useNavigate } from "react-router-dom";
 
 export default function Login() {
-  console.log("login mounting");
-
   const navigate = useNavigate();
 
   function routeBack() {
@@ -13,20 +11,13 @@ export default function Login() {
   }
 
   function handleLogin() {
-    let verification;
     const provider = new GoogleAuthProvider();
     provider.setCustomParameters({
       prompt: "select_account",
     });
     signInWithPopup(auth, provider)
       .then((result) => {
-        // This gives you a Google Access Token. You can use it to access the Google API.
-        const credential = GoogleAuthProvider.credentialFromResult(result);
-        const token = credential.accessToken;
-        // The signed-in user info.
-        const user = result.user;
-        console.log("sign in successful", verification);
-        navigate("/my-anime");
+        navigate("/");
       })
       .catch((error) => {
         const errorMessage = error.message;

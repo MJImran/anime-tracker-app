@@ -9,8 +9,6 @@ export const useAuthContext = () => {
 };
 
 export default function AuthProvider({ children }) {
-  console.log("provider mounted");
-
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
 

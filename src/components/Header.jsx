@@ -3,58 +3,65 @@ import SeacrhModal from "../components/SeacrhModal";
 import { ImSearch } from "react-icons/im";
 import { PiListHeartBold, PiUserBold } from "react-icons/pi";
 import { FaSignOutAlt } from "react-icons/fa";
-import logo from "../assets/animejournal-logo.jpeg";
-import { Link } from "react-router-dom";
+import logo from "../assets/journal.png";
+import { Link, useNavigate } from "react-router-dom";
 import { signOut } from "firebase/auth";
 import { auth } from "../api/firebase";
-import { backgroundColor, textColor } from "../api/util";
+import { backgroundColor, textColor, iconStyle } from "../api/util";
 import { useAuthContext } from "../context/AuthContext";
 
 //
 export default function Header() {
   const [isModal, setIsModal] = React.useState(false);
   const user = useAuthContext();
+  const navigate = useNavigate();
 
   return (
     <>
-      <header className="sticky">
-        <div className="text-plum-800 flex justify-between items-center px-6 py-1.5 shadow-lg">
-          <Link to="/">
-            <img src={logo} alt="" className="w-20" />
-          </Link>
+      {/* <header className="sticky"> */}
+      <div
+        className={`sticky text-plum-800 flex justify-between items-center h-20 pr-8 md:h-26 md:py-10`}
+      >
+        <Link to="/">
+          <div className="w-26 md:w-40">
+            <img src={logo} alt="" className="w-full" />
+          </div>
+        </Link>
 
-          <nav className="flex gap-8 items-center text-xl">
-            {user && (
-              <Link to="/my-anime">
-                <PiListHeartBold className={"text-violet-950"} />
-              </Link>
-            )}
-
-            <Link to="/login">
-              <PiUserBold className="text-violet-950" />
+        <nav className="flex gap-9 items-center sm:gap-15 lg:gap-19 ">
+          {user && (
+            <Link to="/my-anime">
+              <PiListHeartBold className={`${iconStyle}`} />
             </Link>
+          )}
 
+          {!user && (
+            <Link to="/login">
+              <PiUserBold className={`${iconStyle}`} />
+            </Link>
+          )}
+
+          <span
+            onClick={() => {
+              setIsModal((prev) => !prev);
+            }}
+          >
+            <ImSearch className={`${iconStyle}`} />
+          </span>
+
+          {user && (
             <span
               onClick={() => {
-                setIsModal((prev) => !prev);
+                signOut(auth);
+                navigate("/login");
               }}
             >
-              <ImSearch className="text-violet-950" />
+              <FaSignOutAlt className={`${iconStyle}`} />
             </span>
-
-            {user && (
-              <span
-                onClick={() => {
-                  signOut(auth);
-                  console.log("user signed out");
-                }}
-              >
-                <FaSignOutAlt className="text-violet-950" />
-              </span>
-            )}
-          </nav>
-        </div>
-      </header>
+          )}
+        </nav>
+      </div>
+      {/* </header> */}
       <SeacrhModal isModal={isModal} setIsModal={setIsModal} />
     </>
   );

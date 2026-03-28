@@ -49,9 +49,10 @@ export async function add2Db(category, newData, setHasAdded) {
   }
 }
 
-export async function getCol(category, setList) {
+export async function getCol(category, setList, user) {
   const ref = collection(db, category);
-  const querySnapshot = await getDocs(ref);
+  const q = query(ref, where("uid", "==", user.uid));
+  const querySnapshot = await getDocs(q);
   let arr = [];
   querySnapshot.forEach((doc) => {
     arr = [...arr, doc.data()];

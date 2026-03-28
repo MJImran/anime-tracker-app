@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import Card from "./Card";
+import { backgroundColor, textColor, iconStyle } from "../api/util";
 
 export default function Suggestion() {
   const [suggestion, setSuggestion] = useState([]);
@@ -42,7 +43,9 @@ export default function Suggestion() {
         </section>
       )}
       {!isLoading && !error && (
-        <section className="mt-6 px-3 grid grid-cols-3 gap-2 sm:grid-cols-3 md:grid-cols-4">
+        <section
+          className={`${backgroundColor} px-3 py-6 grid grid-cols-3 gap-2 sm:grid-cols-4 md:grid-cols-5 lg:grid-cols-7 xl:grid-cols-8`}
+        >
           {suggestions}
         </section>
       )}

@@ -13,14 +13,14 @@ function App() {
     <AuthProvider>
       <HashRouter>
         <Routes>
+          <Route path="anime-details/:id" element={<AnimeDetails />} />
           <Route element={<Layout />}>
             <Route index element={<Home />} />
-            <Route path="anime-details/:id" element={<AnimeDetails />} />
+            <Route element={<Authentication />}>
+              <Route path="my-anime" element={<MyAnime name="jamiu" />} />
+            </Route>
           </Route>
           <Route path="login" element={<Login />} />
-          <Route element={<Authentication />}>
-            <Route path="my-anime" element={<MyAnime name="jamiu" />} />
-          </Route>
         </Routes>
       </HashRouter>
     </AuthProvider>

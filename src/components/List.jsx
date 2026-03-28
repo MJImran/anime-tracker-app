@@ -33,7 +33,7 @@ export default function List({ anime, list, setList, setIsModal, setAnime }) {
     const image = item.images.webp.image_url;
     const episodes = item.episodes;
     const score = item.score;
-    const title = item.title;
+    const title = item.title_english || item.title;
     const rating = item.rating;
     const isAiring = item.airing ? "airing" : "not airing";
 

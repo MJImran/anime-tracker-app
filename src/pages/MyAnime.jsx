@@ -1,12 +1,14 @@
 import React from "react";
 import { getCol } from "../api/firebase";
 import Card from "../components/Card";
+import { useAuthContext } from "../context/AuthContext";
 
 export default function MyAnime() {
   const [list, setList] = React.useState([]);
+  const user = useAuthContext();
 
   React.useEffect(() => {
-    getCol("anime", setList);
+    getCol("anime", setList, user);
   }, []);
 
   const myList = list.map((anime, index) => (
